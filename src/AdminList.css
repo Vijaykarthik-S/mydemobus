@@ -1,0 +1,71 @@
+/* AdminList.css */
+
+/* Container for the user list display */
+.admin-list-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+/* Title for the list of users */
+h3 {
+    text-align: center;
+    color: #333;
+}
+
+/* User card styles */
+.admin-user-card {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.admin-user-card h3 {
+    font-size: 18px;
+    color: #1e1d1d;
+}
+
+.admin-user-card p {
+    font-size: 14px;
+    color: #292828;
+}
+
+.admin-user-card h5 {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* If no users found */
+.no-users-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Style for search input and role filter */
+.search-role-filter {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-input, .role-select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 48%;
+}
+
+.search-input {
+    margin-right: 4%;
+}
+
+.role-select {
+    width: 48%;
+}
