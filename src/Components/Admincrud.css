@@ -1,59 +1,56 @@
-/* AdminCrud.css */
-
-/* Container for the form and action buttons */
-.admin-crud-container {
+.user-list {
     padding: 20px;
-    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+  }
+  
+  .user-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .user-container {
+    display: block; /* Make each user block take the full width */
+    margin-bottom: 20px; /* Add space between user blocks */
+    padding: 20px;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    max-width: 800px;
-    margin: 20px auto;
-}
-
-/* Title for the Admin CRUD section */
-.admin-crud-heading {
-    text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-/* Admin form inputs */
-input {
-    padding: 10px;
-    margin: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%;
-}
-
-/* Button styles */
-button {
-    padding: 10px 15px;
-    background-color: #28a745;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-info p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  
+  .buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .edit-button, .delete-button {
+    background-color: green;
     color: white;
     border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  
+  button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
-}
+    width: 45%;
+  }
 
-button:hover {
-    background-color: #218838;
-}
-
-/* Error messages */
-span {
-    color: red;
-    font-weight: bold;
-}
-
-/* Display success or failure messages */
-.success-message, .error-message {
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Users list section */
-.admin-users-list {
-    margin-top: 20px;
-}
+  
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
