@@ -8,6 +8,11 @@
     max-width: 800px;
     margin: 20px auto;
 }
+.admin-list-container h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
 
 /* Title for the list of users */
 h3 {
@@ -46,7 +51,11 @@ h3 {
     font-weight: bold;
     text-align: center;
 }
-
+.admin-list-container h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
 /* Style for search input and role filter */
 .search-role-filter {
     display: flex;

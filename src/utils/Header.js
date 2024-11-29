@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "./AuthContext";
+import AuthContext from "../Components/AuthContext";
+import buslogo from '../images/newlogobus.jpg'
 import './Header.css'
 const Header = () => {
   const { auth, logout } = useContext(AuthContext);
@@ -16,6 +17,11 @@ const Header = () => {
     <header>
       <nav>
         <ul>
+          <li>
+            <Link to="/">
+               <img src={buslogo} alt="BusSite Logo" className="logo" /> {/* Add the logo */}
+            </Link>
+          </li>
           <li>
             <Link to="/">Home</Link>
           </li>

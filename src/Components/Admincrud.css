@@ -1,65 +1,148 @@
+/* General container styling */
 .user-list {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  
+  padding: 20px;
+  background: linear-gradient(to bottom right, #f8ede3, #f5d7bb);
+  font-family: 'Poppins', sans-serif;
+  color: #5a3e2b;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Titles */
+h1, h2 {
+  color: #4a2f21;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Grid layout for users */
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  list-style: none;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0;
+}
+
+/* Individual user card styling */
+.user-container {
+  background: linear-gradient(135deg, #d8b99c, #f2e2c4);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #5a3e2b;
+}
+
+.user-container:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* User info display */
+.user-container div {
+  font-size: 14px;
+  color: #4a2f21;
+}
+
+.user-container div span {
+  font-weight: bold;
+}
+
+/* Buttons inside user cards */
+.buttons {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-button,
+.delete-button {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-button {
+  background-color: #a97752;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #8c6244;
+  box-shadow: 0 4px 8px rgba(169, 119, 82, 0.3);
+}
+
+.delete-button {
+  background-color: #b8583d;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #9b4732;
+  box-shadow: 0 4px 8px rgba(184, 88, 61, 0.3);
+}
+
+/* Form styling */
+.user-info {
+  max-width: 450px;
+  background: linear-gradient(to bottom right, #fae4d1, #e2c1a8);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+}
+
+.user-info input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #c4a486;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.user-info input:focus {
+  outline: none;
+  border-color: #a97752;
+  box-shadow: 0 0 8px rgba(169, 119, 82, 0.3);
+}
+
+/* Form submit button */
+.user-info .edit-button {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 20px;
+}
+
+/* Error message styling */
+span {
+  font-size: 12px;
+  color: #b8583d;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
   .user-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  
-  .user-container {
-    display: block; /* Make each user block take the full width */
-    margin-bottom: 20px; /* Add space between user blocks */
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-info p {
-    margin: 5px 0;
-    font-size: 14px;
-  }
-  .user-info h2{
-    text-align: center;
-  }
-  .user-info {
-    margin-left: 300px;
-    margin-bottom: 20px;
-  }
-  
-  .buttons {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .edit-button, .delete-button {
-    background-color: rgb(2, 128, 0);
-    
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  
-  button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 45%;
+    grid-template-columns: 1fr;
   }
 
-  
-  
-  button:hover {
-    background-color: #015a05;
+  .user-info {
+    max-width: 90%;
   }
-  
+}

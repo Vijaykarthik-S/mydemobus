@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { getUsers } from "./Services/AdminService";  // Assuming you have this service
-import '../src/AdminList.css';  // Import your custom CSS
+import { getUsers } from "../Services/AdminService";  // Assuming you have this service
+import '../Components/AdminList.css'  // Import your custom CSS
 
 const UserList = () => {
   const [users, setUsers] = useState([]);  // State to store users data
