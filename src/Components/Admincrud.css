@@ -3,6 +3,7 @@
     font-family: Arial, sans-serif;
   }
   
+  
   .user-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -22,6 +23,13 @@
     margin: 5px 0;
     font-size: 14px;
   }
+  .user-info h2{
+    text-align: center;
+  }
+  .user-info {
+    margin-left: 300px;
+    margin-bottom: 20px;
+  }
   
   .buttons {
     margin-top: 10px;
@@ -29,7 +37,8 @@
     justify-content: space-between;
   }
   .edit-button, .delete-button {
-    background-color: green;
+    background-color: rgb(2, 128, 0);
+    
     color: white;
     border: none;
     padding: 5px 10px;
@@ -51,6 +60,6 @@
   
   
   button:hover {
-    background-color: #45a049;
+    background-color: #015a05;
   }
   

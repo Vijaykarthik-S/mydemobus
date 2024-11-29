@@ -43,7 +43,12 @@ const Header = () => {
           )}
             {auth && (
             <li>
-            <Link to="/admins">User List</Link> {/* Add this link */}
+            <Link to="/admins">Admin Control</Link> {/* Add this link */}
+          </li>
+          )}
+           {auth && (
+            <li>
+            <Link to="/payments">Payment</Link> {/* Add this link */}
           </li>
           )}
         </ul>

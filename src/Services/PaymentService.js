@@ -17,9 +17,9 @@ export const getPayments = async () => {
     throw error;
   }
 };
-export const createPayments = async (payment) => {
+export const createPayments = async (payment, token) => {
   try {
-    console.log(user);
+    console.log(payment);
     console.log("CreatePayment Called from service");
     const response = await axios.post(API_URL, payment,{
         headers: {
@@ -58,6 +58,7 @@ export const deletePayments = async (id) => {
               Authorization: `Bearer ${token}`,  // Pass the token here
             },
           });
+    return response.data;
   } catch (error) {
     console.error("Error While Deleting Payments", error);
     throw error;
