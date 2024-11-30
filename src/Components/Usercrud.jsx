@@ -214,7 +214,7 @@ const User = () => {
        
         <div>
           <input
-            type="text"
+            type="datetime-local"
             placeholder="Date Created"
             value={newUser.dateCreated}
             onChange={(e) => setNewUser({ ...newUser, dateCreated: e.target.value })}

@@ -14,7 +14,7 @@ import Footer from './utils/Footer';
 import BookingHistory from './Components/bookingHistory';
 import BusRouteSearch from './Components/findBus';
 import AdminControl from './Components/AdminList';
-import Admin from './Components/Admincrud';
+import AdminDashboard from './Components/AdminDashboard';
 import Payment from './Components/Paymentcrud';
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
           {/* <Route path="/bookingList" element={<BookingList />} /> */}
           <Route path="/bookingHistory" element={<BookingHistory />} />
           <Route path="/findBus" element={<BusRouteSearch />} />
-          <Route path="/admins" element={<Admin />} />
+          <Route path="/admins" element={<AdminDashboard />} />
           <Route path="/payments" element={<Payment/>} />
 
         </Route>
