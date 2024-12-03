@@ -1,69 +1,73 @@
 import React, { useState, useEffect } from "react";
-import { getUsers } from "../Services/AdminService";  // Assuming you have this service
-import '../Components/AdminList.css'  // Import your custom CSS
+import { getUsers } from "../Services/AdminService"; // Assuming you have this service
+import './AdminList.css'; // Import your custom CSS
 
 const UserList = () => {
-  const [users, setUsers] = useState([]);  // State to store users data
-  const [searchQuery, setSearchQuery] = useState("");  // State to track search input
-  const [filterRole, setFilterRole] = useState("user");  // Default filter for users
+  const [users, setUsers] = useState([]); // State to store users data
+  const [searchQuery, setSearchQuery] = useState(""); // State to track search input
+  const [filterRole, setFilterRole] = useState("user"); // Default filter for users
 
   // Fetch users data from the service
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const data = await getUsers();  // Get the data from the backend
-        console.log("Fetched data:", data);  // Log the response to check its structure
+        const data = await getUsers(); // Get the data from the backend
+        console.log("Fetched data:", data); // Log the response to check its structure
 
         // Check if the data is in the expected format and has the "$values" array
         if (data && Array.isArray(data.$values)) {
-          setUsers(data.$values);  // Set users to the state
+          setUsers(data.$values); // Set users to the state
         } else {
           console.error("No users found or invalid data:", data);
-          setUsers([]);  // In case of invalid or missing data, set users to empty array
+          setUsers([]); // In case of invalid or missing data, set users to empty array
         }
       } catch (error) {
         console.error("Failed to fetch users:", error);
-        setUsers([]);  // In case of error, set users to empty array
+        setUsers([]); // In case of error, set users to empty array
       }
     };
 
     fetchUsers();
-  }, []);  // Empty dependency array ensures this runs only once when the component mounts
+  }, []); // Empty dependency array ensures this runs only once when the component mounts
 
   // Filter users based on search query and role
-  const filteredUsers = users.filter(user => 
-    (user.userName.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    user.email.toLowerCase().includes(searchQuery.toLowerCase())) && 
+  const filteredUsers = users.filter(user =>
+    (user.userName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase())) &&
     user.role.toLowerCase().includes(filterRole.toLowerCase())
   );
 
   return (
     <div className="admin-list-container">
       <h3>User List</h3>
-      
+
       {/* Search input */}
-      <input
-        type="text"
-        className="form-control"
-        placeholder="Search users by name or email"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}  // Update search query state
-      />
-      
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search users by name or email"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+        />
+      </div>
+
       {/* Role filter */}
-      <select
-        className="form-control"
-        value={filterRole}
-        onChange={(e) => setFilterRole(e.target.value)}  // Update filter role state
-      >
-        <option value="user">User</option>
-        <option value="admin">Admin</option>
-        {/* Add more roles if needed */}
-      </select>
+      <div className="filter-container">
+        <select
+          className="role-filter"
+          value={filterRole}
+          onChange={(e) => setFilterRole(e.target.value)} // Update filter role state
+        >
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+          {/* Add more roles if needed */}
+        </select>
+      </div>
 
       {/* Display users */}
       {filteredUsers.length === 0 ? (
-        <p className="no-users-message">No users found.</p>  // If no users match the filter, show this message
+        <p className="no-users-message">No users found.</p> // If no users match the filter, show this message
       ) : (
         filteredUsers.map((user) => (
           <div key={user.userId} className="admin-user-card">

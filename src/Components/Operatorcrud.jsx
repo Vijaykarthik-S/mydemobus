@@ -8,14 +8,14 @@ import {
 } from "../Services/AdminService";
 
 const Operator = () =>{
-    const [operators, setOperators] = useState([]);  // Store users data
-    const [newOperator, setNewOperator] = useState({
-      operatorId: 0,
-      operatorName: "",
-      operatorPhone: "",
-      dateCreated: "",
-      busId:""
-    });
+      const [operators, setOperators] = useState([]);  // Store users data
+      const [newOperator, setNewOperator] = useState({
+        operatorId: 0,
+        operatorName: "",
+        operatorPhone: "",
+        dateCreated: "",
+        busId:""
+      });
 
     const [isEdit, setIsEdit] = useState(false);  // Track edit state
     const [errors, setErrors] = useState({

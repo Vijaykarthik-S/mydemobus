@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer>
-      <p>&copy; {new Date().getFullYear()} FastX Bus Ticket Booking System</p>
+      <p>&copy; {new Date().getFullYear()} BusOnGo</p>
     </footer>
   );
 };

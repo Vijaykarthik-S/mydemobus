@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../Components/AuthContext";
 import buslogo from '../images/newlogobus.jpg'
 import './Header.css'
+
 const Header = () => {
   const { auth, logout } = useContext(AuthContext);
   const navigate = useNavigate();
