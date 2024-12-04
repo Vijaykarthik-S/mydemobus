@@ -1,5 +1,6 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import '../Components/Admincrud.css';
+import '../Components/BusRoutecrud.css';
 import {
     getBusRoutes,
     createBusRoutes,
@@ -7,126 +8,167 @@ import {
     deleteBusRoutes
 } from "../Services/AdminService";
 
-const BusRoute = () =>{
-    const [busRoutes, setBusRoutes] = useState([]);  // Store users data
+const BusRoute = () => {
+    const [busRoutes, setBusRoutes] = useState([]); 
     const [newBusRoute, setNewBusRoute] = useState({
-      RouteId: 0,
-      SourcePoint: "",
-      Destination: "",
-      BusId: "",
-      DepartureTime:"",
-      ArrivalTime:""
+        RouteId: 0,
+        SourcePoint: "",
+        Destination: "",
+        BusId: "",
+        DepartureTime: "",
+        ArrivalTime: ""
     });
-    const [isEdit, setIsEdit] = useState(false);  // Track edit state
+    const [filter, setFilter] = useState({ SourcePoint: "", Destination: "" });
+    const [isEdit, setIsEdit] = useState(false); 
     const [errors, setErrors] = useState({
         SourcePoint: "",
         Destination: "",
         BusId: "",
-        DepartureTime:"",
-        ArrivalTime:""
+        DepartureTime: "",
+        ArrivalTime: ""
     });
+
     useEffect(() => {
-        fetchBusRoutes();  // Fetch BusRoutes when component mounts
-      }, []);
-      const fetchBusRoutes = async () => {
+        fetchBusRoutes(); 
+    }, []);
+
+    const fetchBusRoutes = async () => {
         try {
-          const data = await getBusRoutes();  // Call the backend API to get users
-          if (data && data.$values) {
-            setBusRoutes(data.$values);  // Set Busroutes if the response is valid
-          } else {
-            console.log("Invalid data structure", data);
-          }
+            const data = await getBusRoutes(filter.SourcePoint, filter.Destination);
+            if (data && data.$values) {
+                setBusRoutes(data.$values); 
+            } else {
+                console.log("Invalid data structure", data);
+            }
         } catch (error) {
-          console.log("Error fetching BusRoutes:", error);
+            console.log("Error fetching BusRoutes:", error);
         }
-      };
-      const validateForm = () => {
+    };
+
+    const validateForm = () => {
         let formErrors = {};
-        if (!newBusRoute.SourcePoint) formErrors.SourcePoint = "SourcePoint Required.";
-        if (!newBusRoute.Destination) formErrors.Destination = "Destination  Required.";
-        if (!newBusRoute.BusId) formErrors.BusId = "BusId Required.";
-        if (!newBusRoute.DepartureTime) formErrors.DepartureTime = "DepartureTime Required.";
-        if (!newBusRoute.ArrivalTime) formErrors.ArrivalTime = "ArrivalTime  Required.";
-        
+        if (!newBusRoute.SourcePoint) formErrors.SourcePoint = "Source Point is required.";
+        if (!newBusRoute.Destination) formErrors.Destination = "Destination is required.";
+        if (!newBusRoute.BusId) formErrors.BusId = "Bus ID is required.";
+        if (!newBusRoute.DepartureTime) formErrors.DepartureTime = "Departure Time is required.";
+        if (!newBusRoute.ArrivalTime) formErrors.ArrivalTime = "Arrival Time is required.";
+
         setErrors(formErrors);
         return Object.keys(formErrors).length === 0;
-      };
-      const handleCreate = async () => {
+    };
+
+    const handleCreate = async () => {
         if (!validateForm()) return;
-    
+
         try {
-          await createBusRoutes(newBusRoute);  // Create new user through the service
-          fetchBusRoutes();  // Reload the user list
-          setNewBusRoute({
-            RouteId: 0,
-            SourcePoint: "",
-            Destination: "",
-            BusId: "",
-            DepartureTime:"",
-            ArrivalTime:""
-          });
+            await createBusRoutes(newBusRoute);
+            fetchBusRoutes(); 
+            setNewBusRoute({
+                RouteId: 0,
+                SourcePoint: "",
+                Destination: "",
+                BusId: "",
+                DepartureTime: "",
+                ArrivalTime: ""
+            });
         } catch (error) {
-          console.log("Error creating BusRoute:", error);
+            console.log("Error creating BusRoute:", error);
         }
-      };
-      const handleUpdate = async () => {
+    };
+
+    const handleUpdate = async () => {
         if (!validateForm()) return;
-    
-        try {
-          await updateBusRoutes(newBusRoute);  // Update the existing user
-          setBusRoutes(
-            busRoutes.map((busRoute) =>
-              busRoute.RouteId === newBusRoute.RouteId ? newBusRoute : busRoute
-            )
-          );
-          setIsEdit(false);
-          setNewBusRoute({
-            RouteId: 0,
-            SourcePoint: "",
-            Destination: "",
-            BusId: "",
-            DepartureTime:"",
-            ArrivalTime:""
-          });
-        } catch (error) {
-          console.log("Error updating busroute:", error);
+
+        if (!newBusRoute.RouteId) {
+            console.error("RouteId is missing or invalid");
+            return; // Stop the update if RouteId is missing or invalid
         }
-      };
-      const handleEdit = (busRoute) => {
-        setNewBusRoute(busRoute);  // Pre-fill the form with the selected user's data
-        setIsEdit(true);  // Set editing state to true
-      };
-      const handleDelete = async (id) => {
+
         try {
-          const token = localStorage.getItem('token');
-          await deleteBusRoutes(id, token);  // Call the delete user API
-          setBusRoutes(busRoutes.filter((busRoute) => busRoute.RouteId !== id));  // Remove deleted user from state
+            console.log("Updating bus route with RouteId:", newBusRoute.RouteId);
+            await updateBusRoutes(newBusRoute.RouteId, newBusRoute);
+            setBusRoutes(
+                busRoutes.map((busRoute) =>
+                    busRoute.RouteId === newBusRoute.RouteId ? newBusRoute : busRoute
+                )
+            );
+            setIsEdit(false);
+            setNewBusRoute({
+                RouteId: 0,
+                SourcePoint: "",
+                Destination: "",
+                BusId: "",
+                DepartureTime: "",
+                ArrivalTime: ""
+            });
         } catch (error) {
-          console.log("Error deleting busroute:", error);
+            console.log("Error updating BusRoute:", error);
         }
-      };
-      return (
+    };
+
+    const handleEdit = (busRoute) => {
+        setNewBusRoute({
+            RouteId: busRoute.routeId,  // Ensure the RouteId is correctly set
+            SourcePoint: busRoute.sourcePoint,
+            Destination: busRoute.destination,
+            BusId: busRoute.busId,
+            DepartureTime: busRoute.departureTime,
+            ArrivalTime: busRoute.arrivalTime
+        });
+        setIsEdit(true);
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await deleteBusRoutes(id);
+            setBusRoutes(busRoutes.filter((busRoute) => busRoute.RouteId !== id));
+        } catch (error) {
+            console.log("Error deleting BusRoute:", error);
+        }
+    };
+
+    return (
         <div className="user-list">
             <h1>Bus Routes</h1>
+            
+            <div className="filter-container">
+                <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filter by Source Point"
+                    value={filter.SourcePoint}
+                    onChange={(e) => setFilter({ ...filter, SourcePoint: e.target.value })}
+                />
+                <input
+                    type="text"
+                    className="filter-input"
+                    placeholder="Filter by Destination"
+                    value={filter.Destination}
+                    onChange={(e) => setFilter({ ...filter, Destination: e.target.value })}
+                />
+                <button className="filter-button" onClick={fetchBusRoutes}>Filter Routes</button>
+            </div>
+
             <ul className="user-grid">
                 {busRoutes.map((busRoute) => (
-                <li key={busRoute.RouteId} className="user-container">
-                    <div>Source Point : {busRoute.SourcePoint}</div>
-                    <div> Destination : {busRoute.Destination}</div>
-                    <div> Bus Id : {busRoute.BusId}</div>
-                    <div> Departure Time : {busRoute.DepartureTime}</div>
-                    <div> Arrival Time : {busRoute.ArrivalTime}</div>
-                                           
-                    <div className="buttons">
-                    <button className="edit-button" onClick={() => handleEdit(busRoute)}>Edit</button>
-                    <button className="delete-button" onClick={() => handleDelete(busRoute.RouteId)}>Delete</button>
-                    </div>
-                
-                </li>
+                    <li key={busRoute.routeId} className="user-container">
+                        <div>Route ID: {busRoute.routeId}</div>
+                        <div>Source Point: {busRoute.sourcePoint}</div>
+                        <div>Destination: {busRoute.destination}</div>
+                        <div>Bus ID: {busRoute.busId}</div>
+                        <div>Departure Time: {new Date(busRoute.departureTime).toLocaleString()}</div>
+                        <div>Arrival Time: {new Date(busRoute.arrivalTime).toLocaleString()}</div>
+                        
+                        <div className="buttons">
+                            <button className="edit-button" onClick={() => handleEdit(busRoute)}>Edit</button>
+                            <button className="delete-button" onClick={() => handleDelete(busRoute.routeId)}>Delete</button>
+                        </div>
+                    </li>
                 ))}
             </ul>
+
             <div className="user-info">
-            <h2>{isEdit ? "Edit BusRoute" : "Add New BusRoute"}</h2>
+                <h2>{isEdit ? "Edit Bus Route" : "Add New Bus Route"}</h2>
                 <div>
                     <input
                         type="text"
@@ -134,52 +176,50 @@ const BusRoute = () =>{
                         value={newBusRoute.SourcePoint}
                         onChange={(e) => setNewBusRoute({ ...newBusRoute, SourcePoint: e.target.value })}
                     />
-                    {errors.SourcePoint && <span style={{ color: "Red" }}>{errors.SourcePoint}</span>}
+                    {errors.SourcePoint && <span style={{ color: "red" }}>{errors.SourcePoint}</span>}
                 </div>
                 <div>
                     <input
                         type="text"
-                        placeholder="Destination Point"
+                        placeholder="Destination"
                         value={newBusRoute.Destination}
                         onChange={(e) => setNewBusRoute({ ...newBusRoute, Destination: e.target.value })}
                     />
-                    {errors.Destination && <span style={{ color: "Red" }}>{errors.Destination}</span>}
+                    {errors.Destination && <span style={{ color: "red" }}>{errors.Destination}</span>}
                 </div>
                 <div>
                     <input
-                        type="text"
+                        type="number"
                         placeholder="Bus ID"
                         value={newBusRoute.BusId}
                         onChange={(e) => setNewBusRoute({ ...newBusRoute, BusId: e.target.value })}
                     />
-                    {errors.BusId && <span style={{ color: "Red" }}>{errors.BusId}</span>}
+                    {errors.BusId && <span style={{ color: "red" }}>{errors.BusId}</span>}
                 </div>
                 <div>
                     <input
-                        type="text"
+                        type="datetime-local"
                         placeholder="Departure Time"
                         value={newBusRoute.DepartureTime}
                         onChange={(e) => setNewBusRoute({ ...newBusRoute, DepartureTime: e.target.value })}
                     />
-                    {errors.DepartureTime && <span style={{ color: "Red" }}>{errors.DepartureTime}</span>}
+                    {errors.DepartureTime && <span style={{ color: "red" }}>{errors.DepartureTime}</span>}
                 </div>
                 <div>
                     <input
-                        type="text"
+                        type="datetime-local"
                         placeholder="Arrival Time"
                         value={newBusRoute.ArrivalTime}
                         onChange={(e) => setNewBusRoute({ ...newBusRoute, ArrivalTime: e.target.value })}
                     />
-                    {errors.ArrivalTime && <span style={{ color: "Red" }}>{errors.ArrivalTime}</span>}
+                    {errors.ArrivalTime && <span style={{ color: "red" }}>{errors.ArrivalTime}</span>}
                 </div>
                 <button className="edit-button" onClick={isEdit ? handleUpdate : handleCreate}>
-                        {isEdit ? "Update" : "Add"}
+                    {isEdit ? "Update" : "Add"}
                 </button>
-            
             </div>
-
         </div>
-      )
+    );
+};
 
-}
 export default BusRoute;

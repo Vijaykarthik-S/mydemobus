@@ -197,12 +197,14 @@ export const deleteBuses = async (id) => {
   }
 };
 
-
-//service for bus routes
 export const getBusRoutes = async (source, destination) => {
+  if (!source || !destination) {
+    throw new Error("Source and destination must be provided.");
+  }
+
   try {
     const token = localStorage.getItem("token");
-    const response = await axios.get(`${ROUTE_API_URL}?source=${encodeURIComponent(source)}&destination=${encodeURIComponent(destination)}`, {
+    const response = await axios.get(`${ROUTE_API_URL}?source=${source}&destination=${destination}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -213,6 +215,7 @@ export const getBusRoutes = async (source, destination) => {
     throw error;
   }
 };
+
 
 // CREATE Bus Route
 export const createBusRoutes = async (busRoute) => {
@@ -233,18 +236,25 @@ export const createBusRoutes = async (busRoute) => {
 // UPDATE Bus Route
 export const updateBusRoutes = async (routeId, busRoute) => {
   try {
-    const token = localStorage.getItem("token");
-    const response = await axios.put(`${ROUTE_API_URL}/${routeId}`, busRoute, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
+      // Check RouteId and busRoute values
+      console.log("Updating bus route with ID:", routeId, "and data:", busRoute);
+
+      const token = localStorage.getItem("token");
+      const response = await axios.put(`${ROUTE_API_URL}/${routeId}`, busRoute, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+          },
+      });
+      return response.data;
   } catch (error) {
-    console.error("Error updating bus route:", error);
-    throw error;
+      console.log("Error updating bus route:", error.response ? error.response.data : error.message);
+      throw error;
   }
 };
+
+
+
 
 // DELETE Bus Route
 export const deleteBusRoutes = async (routeId) => {
