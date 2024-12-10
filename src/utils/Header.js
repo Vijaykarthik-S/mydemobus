@@ -57,9 +57,6 @@ const Header = () => {
               {auth.role === "BusOperator" && (
                 <>
                   <li>
-                    <Link to="/findBus">Find Bus</Link>
-                  </li>
-                  <li>
                     <Link to="/admins">Admin Control</Link> {/* Bus operators can access admin control */}
                   </li>
                 </>

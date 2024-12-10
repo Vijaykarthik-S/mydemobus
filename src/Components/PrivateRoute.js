@@ -12,11 +12,11 @@ const PrivateRoute = ({ allowedRoles }) => {
   }
 
   if (allowedRoles && !allowedRoles.includes(auth.role)) {
-    // If the user is authenticated but does not have the required role, redirect to home page
+  
     return <Navigate to="/" />;
   }
 
-  // If the user is authenticated and has the required role, allow access to the route
+
   return <Outlet />;
 };
 
