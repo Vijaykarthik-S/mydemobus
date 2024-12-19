@@ -7,6 +7,7 @@ import {
   updateUsers,
   deleteUsers,
 } from "../Services/AdminService";
+import { toast } from "react-toastify";
 
 const User = () => {
   const [users, setUsers] = useState([]);  // Store users data
@@ -78,6 +79,7 @@ const User = () => {
         role: "",
         dateCreated: "",
       });
+      toast.success("A new user was created successfully!")
     } catch (error) {
       console.log("Error creating user:", error);
     }
@@ -104,6 +106,7 @@ const User = () => {
         role: "",
         dateCreated: "",
       });
+      toast.success("User updated successfully!")
     } catch (error) {
       console.log("Error updating user:", error);
     }
@@ -119,6 +122,7 @@ const User = () => {
       const token = localStorage.getItem('token');
       await deleteUsers(id, token);  // Call the delete user API
       setUsers(users.filter((user) => user.userId !== id));  // Remove deleted user from state
+      toast.success("User deleted successfully!")
     } catch (error) {
       console.log("Error deleting user:", error);
     }

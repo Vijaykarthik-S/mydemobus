@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import UserCRUD from '../Components/Usercrud';  
 import OperatorCRUD from '../Components/Operatorcrud';  
 import BusCRUD from '../Components/Buscrud';
@@ -11,12 +12,22 @@ const AdminDashboard = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const { auth } = useContext(AuthContext); 
 
+  const isAdmin = auth && auth.role === 'Admin';
+  const isBusOperator = auth && auth.role === 'BusOperator';
+
+  useEffect(() => {
+    if (auth && auth.role) {
+      toast.success(`Welcome ${auth.role}!`, {
+        position: 'top-right',
+        autoClose: 3000,
+        toastId: 'welcome-toast', 
+      });
+    }
+  }, [auth]);
+
   const handleSelectionChange = (event) => {
     setSelectedOption(event.target.value);
   };
-
-  const isAdmin = auth && auth.role === 'Admin';
-  const isBusOperator = auth && auth.role === 'BusOperator';
 
   return (
     <div className='admin-dashboard'>
@@ -43,8 +54,6 @@ const AdminDashboard = () => {
       ) : (
         <p>Only Admin can access this page</p>
       )}
-
-      {/* Provide links to the different sections for better navigation */}
     
     </div>
   );

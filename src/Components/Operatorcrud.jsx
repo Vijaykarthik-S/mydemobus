@@ -6,6 +6,7 @@ import {
     updateOperators,
     deleteOperators
 } from "../Services/AdminService";
+import { toast } from "react-toastify";
 
 const Operator = () =>{
       const [operators, setOperators] = useState([]);  // Store users data
@@ -63,6 +64,7 @@ const Operator = () =>{
             dateCreated: "",
             busId:""
           });
+          toast.success("A new BusOperator was created successfully!")
         } catch (error) {
           console.log("Error creating Operator:", error);
         }
@@ -85,6 +87,7 @@ const Operator = () =>{
             dateCreated: "",
             busId:""
           });
+          toast.success("BusOperator updated successfully!")
         } catch (error) {
           console.log("Error updating operator:", error);
         }
@@ -97,7 +100,8 @@ const Operator = () =>{
         try {
           const token = localStorage.getItem('token');
           await deleteOperators(id, token);  // Call the delete user API
-          setOperators(operators.filter((operator) => operator.operatorId !== id));  // Remove deleted user from state
+          setOperators(operators.filter((operator) => operator.operatorId !== id));
+          toast.success("BusOperator deleted successfully!")  // Remove deleted user from state
         } catch (error) {
           console.log("Error deleting operator:", error);
         }

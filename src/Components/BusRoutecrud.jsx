@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import '../Components/Admincrud.css';
 import '../Components/BusRoutecrud.css';
 import {
@@ -7,6 +7,8 @@ import {
     updateBusRoutes,
     deleteBusRoutes
 } from "../Services/AdminService";
+import { toast } from "react-toastify";
+import  AuthContext  from "../Components/AuthContext";
 
 const BusRoute = () => {
     const [busRoutes, setBusRoutes] = useState([]); 
@@ -27,6 +29,7 @@ const BusRoute = () => {
         DepartureTime: "",
         ArrivalTime: ""
     });
+    const { auth } = useContext(AuthContext);
 
     useEffect(() => {
         fetchBusRoutes(); 
@@ -42,6 +45,7 @@ const BusRoute = () => {
             }
         } catch (error) {
             console.log("Error fetching BusRoutes:", error);
+            
         }
     };
 
@@ -71,6 +75,7 @@ const BusRoute = () => {
                 DepartureTime: "",
                 ArrivalTime: ""
             });
+            toast.success("A new BusRoute was created successfully!")
         } catch (error) {
             console.log("Error creating BusRoute:", error);
         }
@@ -101,6 +106,7 @@ const BusRoute = () => {
                 DepartureTime: "",
                 ArrivalTime: ""
             });
+            toast.success("BusRoute updated successfully")
         } catch (error) {
             console.log("Error updating BusRoute:", error);
         }
@@ -119,9 +125,14 @@ const BusRoute = () => {
     };
 
     const handleDelete = async (id) => {
+        if (auth && auth.role === "BusOperator") {
+            toast.error("Bus Operators cannot delete busroutes.");
+            return;
+          }
         try {
             await deleteBusRoutes(id);
             setBusRoutes(busRoutes.filter((busRoute) => busRoute.RouteId !== id));
+            toast.success("BusRoute deleted successfully!")
         } catch (error) {
             console.log("Error deleting BusRoute:", error);
         }

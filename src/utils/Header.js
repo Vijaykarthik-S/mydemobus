@@ -46,11 +46,12 @@ const Header = () => {
               {auth.role === "User" && (
                 <>
                   <li>
-                    <Link to="/bookingHistory">Booking History</Link>
-                  </li>
-                  <li>
                     <Link to="/findBus">Find Bus</Link>
                   </li>
+                  <li>
+                    <Link to="/bookingHistory">Booking History</Link>
+                  </li>
+                  
                 </>
               )}
 
